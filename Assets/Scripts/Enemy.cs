@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public GameObject player;
-    public bool isGoingLeft;
+    public bool isGoingRight;
     public float moveSpeed = 1;
 
     public float currentJumpCooldown;
@@ -25,14 +25,12 @@ public class Enemy : MonoBehaviour
 
         _rigidbody2D = GetComponent<Rigidbody2D>();
 
-        _rigidbody2D.velocity = new Vector3(moveSpeed,0,0);
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
-        //transform.Translate(new Vector3(moveSpeed * Time.deltaTime, 0));
-
         currentJumpCooldown -= Time.deltaTime;
 
         if(currentJumpCooldown < 0)
@@ -41,7 +39,14 @@ public class Enemy : MonoBehaviour
             currentJumpCooldown = jumpCooldown;
         }
 
-        //if(isGoingLeft)
+        if (player.transform.position.x < transform.position.x)
+        {
+            isGoingRight = false;
+        }
+        else
+        {
+            isGoingRight = true;
+        }
     }
 
     private void FixedUpdate()
@@ -52,7 +57,9 @@ public class Enemy : MonoBehaviour
             Jump();
         }
 
-        //_rigidbody2D.velocity = new Vector3(moveSpeed, _rigidbody2D.velocity.y, 0);
+        var xSpeed = isGoingRight ? moveSpeed : -moveSpeed;
+
+        _rigidbody2D.velocity = new Vector3(xSpeed, _rigidbody2D.velocity.y, 0);
     }
 
     private void Jump()
@@ -73,12 +80,11 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log("DED");
 
-        Instantiate(deadEnemy, transform.position, Quaternion.identity);
-
         gameObject.SetActive(false);
 
-        //_rigidbody2D.velocity = new Vector3(0, 0, 0);
+        Instantiate(deadEnemy, transform.position, Quaternion.identity);
 
+        //_rigidbody2D.velocity = new Vector3(0, 0, 0);
         //_rigidbody2D.constraints = RigidbodyConstraints2D.FreezePositionX;
 
         //Invoke("MakeTotallyDead", totallyDeadTime);
