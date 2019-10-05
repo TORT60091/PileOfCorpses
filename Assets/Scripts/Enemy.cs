@@ -15,8 +15,10 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D _rigidbody2D;
     private bool isGoingToJump;
 
-    public float totallyDeadTime = 3;
+    public float totallyDeadTime = 2;
     public GameObject deadEnemy;
+
+    public GameObject deadEnemyGameObject;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +40,11 @@ public class Enemy : MonoBehaviour
             isGoingToJump = true;
             currentJumpCooldown = jumpCooldown;
         }
+
+        //if(GameManager.instance.isGameOver)
+        //{
+        //    return;
+        //}
 
         if (player.transform.position.x < transform.position.x)
         {
@@ -82,16 +89,17 @@ public class Enemy : MonoBehaviour
 
         gameObject.SetActive(false);
 
-        Instantiate(deadEnemy, transform.position, Quaternion.identity);
+        deadEnemyGameObject = Instantiate(deadEnemy, transform.position, Quaternion.identity);
 
         //_rigidbody2D.velocity = new Vector3(0, 0, 0);
         //_rigidbody2D.constraints = RigidbodyConstraints2D.FreezePositionX;
 
-        //Invoke("MakeTotallyDead", totallyDeadTime);
+        Invoke("MakeTotallyDead", totallyDeadTime);
     }
 
     private void MakeTotallyDead()
     {
-        _rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
+        deadEnemyGameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        //_rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
     }
 }

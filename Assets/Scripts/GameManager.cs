@@ -7,12 +7,17 @@ public class GameManager : MonoBehaviour
 {
     public int CurrentLevel;
 
+    public GameObject Player;
     public static GameManager instance;
+
+    public bool isGameOver;
 
     private void Awake()
     {
         instance = this;
         DontDestroyOnLoad(this);
+
+        Player = GameObject.FindGameObjectWithTag("Player");
     }
 
     void Start()
@@ -27,7 +32,18 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        CanvasScript.instance.gameObject.SetActive(true);
+        isGameOver = true;
+
+        DisablePlayer();
+
+        CanvasScript.instance.ShowGameOver();
+    }
+
+    private void DisablePlayer()
+    {
+        Player.GetComponent<Controller2D>().enabled = false;
+        Player.GetComponent<PlayerInput>().enabled = false;
+        Player.GetComponent<Player>().enabled = false;
     }
 
     public void NextLevel()
@@ -38,7 +54,9 @@ public class GameManager : MonoBehaviour
 
     public void RestartLevel()
     {
-        CanvasScript.instance.gameObject.SetActive(false);
+        isGameOver = false;
+
+        CanvasScript.instance.HideGameOver();
         SceneManager.LoadScene(0);
     }
 }

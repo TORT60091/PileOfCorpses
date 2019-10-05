@@ -26,6 +26,11 @@ public class CameraFollow : MonoBehaviour
 
     private void LateUpdate()
     {
+        //if(GameManager.instance.isGameOver)
+        //{
+        //    return;
+        //}
+
         focusArea.Update(target.coll.bounds);
 
         Vector2 focusPosition = focusArea.centre + Vector2.up * verticalOffset;
