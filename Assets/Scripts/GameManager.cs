@@ -41,9 +41,6 @@ public class GameManager : MonoBehaviour
 
     private void DisablePlayer()
     {
-        Player.GetComponent<Controller2D>().enabled = false;
-        Player.GetComponent<PlayerInput>().enabled = false;
-        Player.GetComponent<Player>().enabled = false;
     }
 
     public void NextLevel()

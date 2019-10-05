@@ -146,6 +146,12 @@ public class Player : MonoBehaviour
         {
             Debug.Log("GAME OVER");
             GameManager.instance.GameOver();
+
+            GetComponent<ParticleSystem>().Play();
+
+            GetComponent<Controller2D>().enabled = false;
+            GetComponent<PlayerInput>().enabled = false;
+            this.enabled = false;
         }
     }
 }

@@ -40,7 +40,7 @@ public class EnemySpawner : MonoBehaviour
 
         isSpawnOnLeft = !isSpawnOnLeft;
 
-        var enemy = Instantiate(Enemy, spawnTransform.position, Quaternion.identity);
+        var enemy = Instantiate(Enemy, spawnTransform.position, Quaternion.identity, transform);
         enemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(0,15),ForceMode2D.Impulse);
     }
 }

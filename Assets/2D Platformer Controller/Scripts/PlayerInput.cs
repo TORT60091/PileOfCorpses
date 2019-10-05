@@ -10,9 +10,12 @@ public class PlayerInput : MonoBehaviour
     public Transform ShowSpawnPoint;
 
     public float bulletSpeed = 10;
+    public GameObject BulletHolder;
 
     private void Start()
     {
+        BulletHolder = new GameObject("BulletHolder");
+
         player = GetComponent<Player>();
         ShowSpawnPoint = Gun.transform.GetChild(0);
     }
@@ -47,7 +50,11 @@ public class PlayerInput : MonoBehaviour
 
     private void InstantiateBullet(Vector2 direction, Quaternion rotation)
     {
-        var bullet = Instantiate(Bullet, ShowSpawnPoint.position, rotation);
+        var bullet = Instantiate(Bullet, ShowSpawnPoint.position, rotation, BulletHolder.transform);
         bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
+
+        ShowSpawnPoint.GetComponent<ParticleSystem>().Play();
+
+
     }
 }

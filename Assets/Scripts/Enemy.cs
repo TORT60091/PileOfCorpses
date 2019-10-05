@@ -91,6 +91,8 @@ public class Enemy : MonoBehaviour
 
         deadEnemyGameObject = Instantiate(deadEnemy, transform.position, Quaternion.identity);
 
+        deadEnemyGameObject.GetComponent<ParticleSystem>().Play();
+
         //_rigidbody2D.velocity = new Vector3(0, 0, 0);
         //_rigidbody2D.constraints = RigidbodyConstraints2D.FreezePositionX;
 
